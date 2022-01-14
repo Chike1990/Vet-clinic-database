@@ -7,8 +7,7 @@ CREATE TABLE animals (
 	escape_attempts integer,
 	neutered boolean NOT NULL,
 	weight_kg numeric NOT NULL,
-	species_id VARCHAR(50),
-    owner_id
+	species VARCHAR(50),
 );
 
 -- Creates tables owners and species
