@@ -9,3 +9,19 @@ CREATE TABLE animals (
 	weight_kg numeric NOT NULL,
 	species VARCHAR(50)
 );
+
+-- Creates tables owners and species
+
+
+CREATE TABLE owners (
+    owner_id SERIAL,
+	full_name VARCHAR(100) NOT NULL,
+	age INT,
+	PRIMARY KEY (owner_id)
+);
+
+CREATE TABLE species (
+    specie_id SERIAL,
+	name VARCHAR(100) NOT NULL,
+	PRIMARY KEY (specie_id)
+);
