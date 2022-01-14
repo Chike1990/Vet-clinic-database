@@ -117,3 +117,42 @@ VALUES (DEFAULT, 'Pokemon');
 INSERT INTO species (specie_id, name)
 VALUES (DEFAULT, 'Digimon');
 
+-- Query multiple tables and modify animals table: 
+
+CREATE SEQUENCE animals_id_seq;
+ALTER TABLE animals ALTER COLUMN id SET DEFAULT nextval('animals_id_seq');
+
+ALTER TABLE animals DROP COLUMN species;
+
+ALTER TABLE animals ADD species_id INTEGER;
+ALTER TABLE animals ADD CONSTRAINT fk_animals_species FOREIGN KEY (species_id) REFERENCES species (specie_id);
+
+ALTER TABLE animals ADD owners_id INTEGER;
+ALTER TABLE animals ADD CONSTRAINT fk_animals_owners FOREIGN KEY (owners_id) REFERENCES owners (owner_id);
+
+-- Modify inserted animals to include the species_id value 
+
+UPDATE animals SET species_id = (SELECT specie_id FROM species WHERE name LIKE 'Digimon') WHERE name LIKE '%mon';
+UPDATE animals SET species_id = (SELECT specie_id FROM species WHERE name LIKE 'Pokemon') WHERE name NOT LIKE '%mon';
+
+--  Modify your inserted animals to include owner information -owner_id
+
+UPDATE animals 
+SET owners_id = (SELECT owner_id FROM owners WHERE full_name = 'Sam Smith') 
+WHERE name Like '%Agumon%';
+
+UPDATE animals 
+SET owners_id = (SELECT owner_id FROM owners WHERE full_name = 'Jennifer Orwell') 
+WHERE name IN ('Gabumon', 'Pikachu');
+
+UPDATE animals 
+SET owners_id = (SELECT owner_id FROM owners WHERE full_name = 'Bob') 
+WHERE name IN ('Devimon', 'Plantmon');
+
+UPDATE animals 
+SET owners_id = (SELECT owner_id FROM owners WHERE full_name = 'Melody Pond') 
+WHERE name IN ('Charmandar', 'Squirtle', 'Blossom');
+
+UPDATE animals 
+SET owners_id = (SELECT owner_id FROM owners WHERE full_name = 'Melody Pond') 
+WHERE name IN ('Angemon', 'Boarmon');
