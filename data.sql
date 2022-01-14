@@ -89,3 +89,43 @@ INSERT INTO animals VALUES (
 true,
 17
 );
+
+-- owners data
+INSERT INTO owners (owner_id, full_name, age)
+VALUES (DEFAULT, 'Sam Smith', 34);
+
+INSERT INTO owners (owner_id, full_name, age) 
+VALUES (DEFAULT, 'Jennifer Orwell', 19);
+
+INSERT INTO owners (owner_id, full_name, age)
+VALUES (DEFAULT, 'Bob', 45);
+
+INSERT INTO owners (owner_id, full_name, age)
+VALUES (DEFAULT, 'Melody Pond', 77);
+
+INSERT INTO owners (owner_id, full_name, age)
+VALUES (DEFAULT, 'Dean Winchester', 14);
+
+INSERT INTO owners (owner_id, full_name, age)
+VALUES (DEFAULT, 'Jodie Whittaker', 38);
+
+-- species data 
+
+INSERT INTO species (specie_id, name)
+VALUES (DEFAULT, 'Pokemon');
+
+INSERT INTO species (specie_id, name)
+VALUES (DEFAULT, 'Digimon');
+
+-- Query multiple tables and modify animals table: 
+
+CREATE SEQUENCE animals_id_seq;
+ALTER TABLE animals ALTER COLUMN id SET DEFAULT nextval('animals_id_seq');
+
+ALTER TABLE animals DROP COLUMN species;
+
+ALTER TABLE animals ADD species_id INTEGER;
+ALTER TABLE animals ADD CONSTRAINT fk_animals_species FOREIGN KEY (species_id) REFERENCES species (specie_id);
+
+ALTER TABLE animals ADD owners_id INTEGER;
+ALTER TABLE animals ADD CONSTRAINT fk_animals_owners FOREIGN KEY (owners_id) REFERENCES owners (owner_id);
